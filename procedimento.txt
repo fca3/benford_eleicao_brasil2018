@@ -1,0 +1,47 @@
+
+PASSO #1
+Remover todos os epacos em brando substituindo por underline.
+
+    Comando:
+        sed -i -e 's/ /_/g' *.csv
+
+PASSO #2
+Filtrar principais colunas (filtro1)
+
+    Comando:
+        awk -F "\"*;\"*" '{print $11,$17,$21,$22,$23,$28,$29,$30,$31}' [arquivo_de_entrada] > [arquivo_de_saida];
+
+    Campos que permanecem no arquivos
+        CD_MUNICIPIO
+        DS_CARGO_PERGUNTA
+        QT_APTOS
+        QT_COMPARECIMENTO
+        QT_ABSTENCOES
+        NR_VOTAVEL
+        NM_VOTAVEL
+        QT_VOTOS
+        NR_URNA_EFETIVADA
+        
+PASSO #3 (ainda filtro1)
+Remover a primeira linha com o cabecalho das colunas
+
+    Comando: 
+        sed -i '1d' *
+        
+PASSO #4
+Filtrar somente linhas da eleicao para Presidente.
+
+    Comando:
+    grep -a 'Presidente' [arquivo_de_entrada] > [arquivo_de_saida]
+    
+PASSO #5
+Filtrar somente colunas relevantes para a analise para presidente (filtro2)
+
+    Comando:
+    awk -F "\"* \"*" '{print $6,$8}' [arquivo_de_entrada] > [arquivo_de_saida];
+
+
+PASSO #6
+Juntar dados de todos os arquivos 
+
+    cat *.csv > dados_completos.csv
